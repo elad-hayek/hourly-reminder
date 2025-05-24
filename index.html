@@ -6,11 +6,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Hourly Notifier</title>
   <link rel="manifest" href="manifest.json">
+  <script>
+  window.OneSignal = window.OneSignal || [];
+    
+  OneSignal.SERVICE_WORKER_PATH = '/hourly-reminder/OneSignalSDKWorker.js';
+  OneSignal.SERVICE_WORKER_UPDATER_PATH = '/hourly-reminder/OneSignalSDKUpdaterWorker.js';
+  </script>
   <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async="async"></script>
   <script>
-    window.OneSignal = window.OneSignal || [];
-    OneSignal.SERVICE_WORKER_PATH = '/hourly-reminder/OneSignalSDKWorker.js';
-    OneSignal.SERVICE_WORKER_UPDATER_PATH = '/hourly-reminder/OneSignalSDKUpdaterWorker.js';
     OneSignal.push(function () {
       OneSignal.init({
         appId: "69c4a948-a5f2-43ab-a523-ef1789adb626",
