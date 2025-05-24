@@ -1,0 +1,79 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hourly Notifier</title>
+  <link rel="manifest" href="manifest.json">
+  <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async="async"></script>
+  <script>
+    window.OneSignal = window.OneSignal || [];
+    OneSignal.push(function () {
+      OneSignal.init({
+        appId: "69c4a948-a5f2-43ab-a523-ef1789adb626",
+        // safari_web_id: "YOUR_SAFARI_WEB_ID",
+        notifyButton: {
+          enable: true,
+        },
+      });
+    });
+  </script>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 20px;
+      background: #121212;
+      color: white;
+      text-align: center;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 18px;
+      margin: 10px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>Hourly Notifier</h1>
+  <p>Click start to receive hourly notifications. You can stop anytime.</p>
+  <button onclick="startNotifications()">Start</button>
+  <button onclick="stopNotifications()">Stop</button>
+
+  <script>
+    let intervalId;
+
+    function startNotifications() {
+      OneSignal.push(function () {
+        OneSignal.showNativePrompt();
+      });
+
+      if (intervalId) return;
+      intervalId = setInterval(() => {
+        OneSignal.sendSelfNotification(
+          "⏰ Hourly Reminder",
+          "This is your hourly alert.",
+          '',
+          { icon: 'https://cdn-icons-png.flaticon.com/512/565/565340.png' }
+        );
+      }, 3600000); // 1 hour in milliseconds
+
+      // Trigger immediately
+      OneSignal.sendSelfNotification(
+        "⏰ Hourly Reminder",
+        "This is your first alert.",
+        '',
+        { icon: 'https://cdn-icons-png.flaticon.com/512/565/565340.png' }
+      );
+    }
+
+    function stopNotifications() {
+      clearInterval(intervalId);
+      intervalId = null;
+    }
+  </script>
+</body>
+</html>
